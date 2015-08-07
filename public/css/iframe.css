@@ -1,10 +1,11 @@
-.video {
+
+video {
    position: relative;
-   
+   padding-bottom: 56.25%;
    overflow: hidden;
 }
 
-.video iframe
+video.iframe
  {
     position: absolute;
     top: 0;

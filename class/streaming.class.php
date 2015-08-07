@@ -8,12 +8,9 @@ class streaming extends WP_Widget
 	public function __construct() {
 
 		parent::WP_Widget(
-
-			'streaming', 
-			
+			'streaming', 			
 			//title of the widget in the WP dashboard
 			__('sigoes-streaming'), 
-
 			array('description'=>'streaming de video', 'class'=>'codewrapperwidget')
 
 		);
@@ -31,11 +28,8 @@ class streaming extends WP_Widget
 	{
 		// these are the default widget values
 		$default = array( 
-
 			'titulo' => __(''),
-
 			'url'=> __('')
-
 			);
 
 		$instance = wp_parse_args( (array)$instance, $default );
@@ -87,20 +81,13 @@ class streaming extends WP_Widget
 	{
 		extract($args, EXTR_SKIP);
 		
-		//global WP theme-driven "before widget" code
-		echo $before_widget;
 		
-		// code before your user input
-		echo '<div class="wrapper"><div class="h_iframe"><center>';
+		echo $before_widget;		
+		$embed_code = wp_oembed_get($instance['url'], array('width'=>600, 'height'=>480));
+		echo '<div class="post-content clearfix">';
+		echo '<center>'.$embed_code.'</center>';
+		echo '</div>';
 		
-		//echo $instance['url'];
-		
-		echo '<iframe width="560" height="315" src="https://www.youtube.com/embed/zmUGnL80kIg" frameborder="0" allowfullscreen></iframe>';
-		
-		// code after your user input
-		echo '</center></div></div>';
-			
-		//global WP theme-driven "after widget" code
 		echo $after_widget;
 	}
 
