@@ -6,7 +6,6 @@ Plugin URI: http://modulos.egob.sv
 Description: Plugin para la implementacion de modulos de proyectos, eventos coyunturales y transmision de streaming
 Author: Equipo de desarrollo SIGOES
 Author URI: http://modulos.egob.sv
-
 */
 
 require_once 'class/postthumbnails.class.php';
@@ -24,44 +23,80 @@ function register_wp_my_plugin(){
 
 
 /**
- * Registrar hoja de estilos
+ * Registrar hojas de estilos
  **/
-/*
-add_action( 'wp_enqueue_scripts', 'register_plugin_styles' );
-function register_plugin_styles() {
-    wp_register_style( 'sigoes_gallery', plugins_url( 'plugin-sigoes/public/css/galeria.css' ) );
-    wp_enqueue_style( 'sigoes_gallery' );
-}
-*/
+
 
 add_action( 'wp_enqueue_scripts', 'registrar_css' );
-function registrar_css() {
-    wp_register_style( 'sigoes_css', plugins_url( 'plugin-sigoes/public/css/ninja-slider.css' ) );
-    wp_enqueue_style( 'sigoes_css' );
+function registrar_css() 
+{
+    
+    wp_register_style( 'carousel', plugins_url( 'plugin-sigoes/public/css/carousel.css' ) );
+    wp_enqueue_style( 'carousel' );
 
-    wp_register_style( 'iframe_css', plugins_url( 'plugin-sigoes/public/css/iframe.css' ) );
-    wp_enqueue_style( 'iframe_css' );
+    wp_register_style( 'mod', plugins_url( 'plugin-sigoes/public/css/mod.css' ) );
+    wp_enqueue_style( 'mod' );
 }
+
+/**
+ * Registrar scripts
+ **/
 
 add_action( 'wp_enqueue_scripts', 'registrar_js' );
 function registrar_js()
-{
-    wp_register_script( 'sigoes_js', plugins_url( 'plugin-sigoes/public/js/ninja-slider.js' ) );
-    wp_enqueue_script( 'sigoes_js' );
+{    
+    
+    wp_register_script( 'jquery_min', plugins_url('plugin-sigoes/public/js/jquery.min.js') );
+    wp_enqueue_script( 'jquery_min' );
+
+    wp_register_script( 'jquery_roundabout', plugins_url('plugin-sigoes/public/js/jquery.roundabout.min.js') );
+    wp_enqueue_script( 'jquery_roundabout' );
+
 }
 
+ 
+add_action('wp_footer','activate_gallery');
+function activate_gallery() {
+?>
+ 
+    <script type="text/javascript">
+    (function($) {
 
-/*
-add_filter( 'the_excerpt_rss', 'wcs_post_thumbnails_in_feeds' );
-add_filter( 'the_content_feed', 'wcs_post_thumbnails_in_feeds' );
-function wcs_post_thumbnails_in_feeds( $content ) {
-    global $post;
-    if( has_post_thumbnail( $post->ID ) ) {
-        $content = '<p>' . get_the_post_thumbnail( $post->ID ) . '</p>' . get_the_content();
-    }
-    return $content;
+    var $descriptions = $('#carousel-descriptions').children('li'),
+        $controls = $('#carousel-controls').find('span'),
+        $carousel = $('#carrusel')
+            .roundabout({childSelector:"img", minOpacity:1, autoplay:true, autoplayDuration:2000, autoplayPauseOnHover:true })
+            .on('focus', 'img', function() {
+                var slideNum = $carousel.roundabout("getChildInFocus");
+            
+                $descriptions.add($controls).removeClass('current');
+                    $($descriptions.get(slideNum)).addClass('current');
+                $($controls.get(slideNum)).addClass('current');
+            });
+
+        $controls.on('click dblclick', function() {
+            var slideNum = -1,
+            i = 0, len = $controls.length;
+
+        for (; i<len; i++) {
+            if (this === $controls.get(i)) {
+            slideNum = i;
+            break;
+            }
+         }
+    
+        if (slideNum >= 0) {
+            $controls.removeClass('current');
+            $(this).addClass('current');
+            $carousel.roundabout('animateToChild', slideNum);
+        }
+        });
+
+    }(jQuery));
+    </script>
+     
+<?php
 }
-*/
 
 
 ?>

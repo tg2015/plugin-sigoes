@@ -63,7 +63,6 @@ class proyectos extends WP_Widget
 		$instance = $old_instance;
 		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['url'] = $new_instance['url'];
-		//$instance['code'] = $new_instance['code'];
 		return $instance;
 	}
 
@@ -89,7 +88,6 @@ class proyectos extends WP_Widget
 		$rss = new DOMDocument();
 		//$rss->load('http://localhost/wordpress/feed/');
 		$url = $instance['url']."/feed";;
-		//$url = $url."/feed";
 		$rss->load($url);
 		$feed = array();
 		foreach ($rss->getElementsByTagName('item') as $node) {
@@ -103,12 +101,8 @@ class proyectos extends WP_Widget
 		array_push($feed, $item);
 		}
 		$limit = 5;
-		//echo '<center>';
-		//echo '<div id="captioned-gallery">';
-		//echo '<figure class="slider">';
-
-		echo '<div id="ninja-slider"><ul>';
-
+		echo '<center>';
+		
 		for($x=0;$x<$limit;$x++) {
 		$title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
 		$link = $feed[$x]['link'];
@@ -119,17 +113,21 @@ class proyectos extends WP_Widget
 		$description=str_replace("<p>", " ", $description);
 		$description=str_replace("</p>", " ", $description);
 		
-		//echo '<figure>'.$description.'</figure>';
 			if($category=='proyectos')
 			{
-			echo '<li><div>'.$description.'<h3><a href="'.$link.'" title="'.$title.'">'.$title.'</a></h3></div></li>';
+			echo $description;
 			}
 		
 		}
-		echo '</ul></div>';
 		
-		//echo '</figure></div></center>';
-			
+		?>
+		<!--html-->
+		<!--codigo html de prueba-->
+
+
+		<?php
+	
+		echo '</center>';	
 		//global WP theme-driven "after widget" code
 		echo $after_widget;
 	}

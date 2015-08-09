@@ -91,14 +91,10 @@ class eventos extends WP_Widget
 		//global WP theme-driven "before widget" code
 		echo $before_widget;
 		
-		// code before your user input
-		echo '<div class="your-class"><!--Your custom html code goes here!-->';
 		//http://www.presidencia.gob.sv/feed
 		//echo $instance['url'];
 		$rss = new DOMDocument();
-		//$rss->load('http://localhost/wordpress/feed/');
-		$url = $instance['url'];
-		$url = $url."/feed";
+		$url = $instance['url']."/feed";
 		$rss->load($url);
 		$feed = array();
 		foreach ($rss->getElementsByTagName('item') as $node) {
@@ -120,20 +116,18 @@ class eventos extends WP_Widget
 		$description = $feed[$x]['desc'];
 		$category = $feed[$x]['category'];
 		$date = date('l F d, Y', strtotime($feed[$x]['date']));
-		if($x==0)
+		if($x==0 && $category == 'eventos')
 			{
-			 echo '<td><b>Gobierno Informa</b></td>';
+			 echo '<td><b>Gobierno Informa</b><br/><center>';
+			 echo '<img src="'.plugins_url( 'plugin-sigoes/public/img/megafono.png' ).'" width=50% height=50%></center></td>';
 			}
 		if($category == 'eventos')
 			{
 			echo '<td><strong><a href="'.$link.'" title="'.$title.'">'.$title.'</a></strong><br /></td>';
 			}
 		}
-		echo '</tr></table></center>';
+		echo '</tr></table></center><br/>';
 		
-		// code after your user input
-		echo '</div>';
-			
 		//global WP theme-driven "after widget" code
 		echo $after_widget;
 	}
