@@ -87,10 +87,17 @@ class streaming extends WP_Widget
 		//$embed_code = wp_oembed_get($instance['url'], array('width'=>600, 'height'=>480));
 		$embed_code = wp_oembed_get($instance['url']);
 		echo '<div class="post-content clearfix">';
+		echo '<div class="col-sm-6">';
 		echo '<center>'.$embed_code.'</center>';
+		echo '</div>';
+		echo '<div class="col-sm-6">';
+		echo '<center><h2>Titulo del Video</h2></center>';
+		echo 'En esta seccion va el codigo de la descripcion del video';
+		echo 'En esta seccion va el codigo de la descripcion del video';
+		echo 'En esta seccion va el codigo de la descripcion del video';
+		echo '</div>';
 		echo '</div><br/><br/>';
-		
-		echo $after_widget;
+
 	}
 /*Fin de Funcion para Mostrar el Widget Actual*/
 
