@@ -1,7 +1,11 @@
 <?php
+/*
+*Nombre del módulo: Utilidades
+*Objetivo: Utilidades para el desarrollo de los moduos de proyectos, eventos y streaming
+*Dirección física: /plugins/plugin-sigoes/class/utilidades.class.php
+*/
 
-
-
+/*Inicio de Funcion para obtener url en formato correcto*/
  	function nowww($text) {
  		$word = array(
  		"http://" => "",
@@ -17,6 +21,8 @@
  		$text = strip_tags(addslashes($text));
  		return $text;
  	}
+/*Fin de Funcion para obtener url en formato correcto*/
 
+/*Funciones de Validación*/
 
 ?>

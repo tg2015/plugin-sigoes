@@ -1,40 +1,41 @@
 <?php
+/*
+*Nombre del módulo: Streaming
+*Objetivo: Mostrar el streaming de video realizados por la presidencia de El Salvador
+*Dirección física: /plugins/plugin-sigoes/class/streaming.class.php
+*/
 
-/*constructor*/
 class streaming extends WP_Widget 
 
 {
-
+/*Inicio de Funcion Constructor de Widget Streaming*/
 	public function __construct() {
 
 		parent::WP_Widget(
 			'streaming', 			
-			//title of the widget in the WP dashboard
+			//titulo del widget en la WP dashboard
 			__('sigoes-streaming'), 
 			array('description'=>'streaming de video', 'class'=>'codewrapperwidget')
 
 		);
 
 	}
-
+/*Fin de Funcion Constructor de Widget Streaming*/
 	
 
+/*Inicio de Funcion para crear el Form de Streaming*/
 	/**
 	 * @param type $instance
 	 */
-
 	public function form($instance)
 
 	{
-		// these are the default widget values
 		$default = array( 
 			'titulo' => __(''),
 			'url'=> __('')
 			);
 
 		$instance = wp_parse_args( (array)$instance, $default );
-
-		//this is the html for the fields in the wp dashboard
 		echo "\r\n";
 		echo "<p>";
 		echo "<label for='".$this->get_field_id('titulo')."'>" . __('Titulo') . ":</label> " ;
@@ -47,11 +48,10 @@ class streaming extends WP_Widget
 		echo "</p>";
 
 	}
-
+/*Fin de Funcion para crear el Form de Streaming*/
 		
-
-	/**
-	 * 
+/*Inicio de Funcion para Actualizar Datos de Formulario*/
+	/** 
 	 * @param type $new_instance
 	 * @param type $old_instance
 	 * @return type
@@ -66,9 +66,10 @@ class streaming extends WP_Widget
 		return $instance;
 
 	}
-
+/*Fin de Funcion para Actualizar Datos de Formulario*/
 		
 
+/*Inicio de Funcion para Mostrar el Widget Actual*/
 	/**
 	 * Renders the actual widget
 	 * @global post $post
@@ -91,5 +92,6 @@ class streaming extends WP_Widget
 		
 		echo $after_widget;
 	}
+/*Fin de Funcion para Mostrar el Widget Actual*/
 
 }

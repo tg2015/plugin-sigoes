@@ -1,10 +1,15 @@
 <?php
+/*
+*Nombre del módulo: Eventos
+*Objetivo: Mostrar los eventos realizados por la presidencia de El Salvador
+*Dirección física: /plugins/plugin-sigoes/class/eventos.class.php
+*/
 
-/*constructor*/
+
 class eventos extends WP_Widget 
 
 {
-
+/*Inicio de Funcion Constructor de Widget Eventos*/
 	public function __construct() {
 
 		parent::WP_Widget(
@@ -19,9 +24,9 @@ class eventos extends WP_Widget
 		);
 
 	}
-
+/*Fin de Funcion Constructor de Widget Eventos*/
 	
-
+/*Inicio de Funcion para crear el Form de Eventos*/
 	/**
 	 * @param type $instance
 	 */
@@ -29,7 +34,6 @@ class eventos extends WP_Widget
 	public function form($instance)
 
 	{
-		// these are the default widget values
 		$default = array( 
 
 			'titulo' => __(''),
@@ -40,7 +44,6 @@ class eventos extends WP_Widget
 
 		$instance = wp_parse_args( (array)$instance, $default );
 
-		//this is the html for the fields in the wp dashboard
 		echo "\r\n";
 
 		echo "<p>";
@@ -53,11 +56,10 @@ class eventos extends WP_Widget
 		echo "</p>";
 
 	}
-
+/*Fin de Funcion para crear el Form de Eventos*/
 		
-
-	/**
-	 * 
+/*Inicio de Funcion para Actualizar Datos de Formulario*/
+	/** 
 	 * @param type $new_instance
 	 * @param type $old_instance
 	 * @return type
@@ -72,9 +74,9 @@ class eventos extends WP_Widget
 		return $instance;
 
 	}
-
+/*Fin de Funcion para Actualizar Datos de Formulario*/
 		
-
+/*Inicio de Funcion para Mostrar el Widget Actual*/
 	/**
 	 * Renders the actual widget
 	 * @global post $post
@@ -87,12 +89,9 @@ class eventos extends WP_Widget
 	{
 
 		extract($args, EXTR_SKIP);
-		
-		//global WP theme-driven "before widget" code
+		//inicio de widget
 		echo $before_widget;
 		
-		//http://www.presidencia.gob.sv/feed
-		//echo $instance['url'];
 		$rss = new DOMDocument();
 		$url = $instance['url']."/feed";
 		$rss->load($url);
@@ -127,9 +126,9 @@ class eventos extends WP_Widget
 			}
 		}
 		echo '</tr></table></center><br/><br/>';
-		
-		//global WP theme-driven "after widget" code
+		//fin de widget
 		echo $after_widget;
 	}
+/*Fin de Funcion para Mostrar el Widget Actual*/
 
 }

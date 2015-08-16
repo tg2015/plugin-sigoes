@@ -1,17 +1,22 @@
 <?php
+/*
+*Nombre del módulo: Proyectos
+*Objetivo: Mostrar los proyectos realizados por la presidencia de El Salvador
+*Dirección física: /plugins/plugin-sigoes/class/proyectos.class.php
+*/
+
 include 'utilidades.class.php';
-/*constructor*/
+
 class proyectos extends WP_Widget 
 
 {
-
+/*Inicio de Funcion Constructor de Widget Proyectos*/
 	public function __construct() {
 
 		parent::WP_Widget(
 
 			'proyectos', 
 			
-			//title of the widget in the WP dashboard
 			__('sigoes-proyectos'), 
 
 			array('description'=>'proyectos', 'class'=>'codewrapperwidget')
@@ -19,17 +24,16 @@ class proyectos extends WP_Widget
 		);
 
 	}
-
+/*Fin de Funcion Constructor Proyectos*/
 	
 
+/*Inicio de Funcion para crear el Form de Proyectos*/
 	/**
 	 * @param type $instance
 	 */
-
 	public function form($instance)
 
 	{
-		// these are the default widget values
 		$default = array( 
 
 			'titulo' => __(''),
@@ -40,7 +44,6 @@ class proyectos extends WP_Widget
 
 		$instance = wp_parse_args( (array)$instance, $default );
 
-		//this is the html for the fields in the wp dashboard
 		echo "\r\n";
 
 		echo "<p>";
@@ -53,11 +56,11 @@ class proyectos extends WP_Widget
 		echo "</p>";
 
 	}
-
+/*Fin de Funcion para crear el Form de Proyectos*/
 		
 
+/*Inicio de Funcion para Actualizar Datos de Formulario*/
 	/**
-	 * 
 	 * @param type $new_instance
 	 * @param type $old_instance
 	 * @return type
@@ -72,9 +75,10 @@ class proyectos extends WP_Widget
 		return $instance;
 
 	}
-
+/*Fin de Funcion para Actualizar Datos de Formulario*/
 		
 
+/*Inicio de Funcion para Mostrar el Widget Actual*/
 	/**
 	 * Renders the actual widget
 	 * @global post $post
@@ -88,7 +92,7 @@ class proyectos extends WP_Widget
 
 		extract($args, EXTR_SKIP);
 		
-		//global WP theme-driven "before widget" code
+		//inicio de widget
 		echo $before_widget;
 		
 		$site = nowww($instance['url']); 
@@ -120,20 +124,25 @@ class proyectos extends WP_Widget
 		$description = $feed[$x]['desc'];
 		$category = $feed[$x]['category'];
 		$date = date('l F d, Y', strtotime($feed[$x]['date']));
+				
+		$description=strip_tags($description, '<img>');
+		$doc = new DOMDocument();
+		$doc->loadHTML($description);
+		$xpath = new DOMXPath($doc);
+		$src = $xpath->evaluate("string(//img/@src)");
 		
-		$description=str_replace("<p>", " ", $description);
-		$description=str_replace("</p>", " ", $description);
 		if($category == 'proyectos')
 			{
-			echo $description;
+			echo '<a href="'.$link.'"> <img src="'.$src.'" alt="'.$title.'"></a>';
 			}
 		}		
 		echo '</div></div><br/><br/><br/>';
 		}
 
-		//global WP theme-driven "after widget" code
+		//fin de widget
 		echo $after_widget;
 	}
+/*Fin de Funcion para Mostrar el Widget Actual*/
  
 }
 ?>

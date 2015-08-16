@@ -8,11 +8,19 @@ Author: Equipo de desarrollo SIGOES
 Author URI: http://modulos.egob.sv
 */
 
+
+/**
+ * Registrar Clases a utilizar dentro del Plugin
+ **/
 require_once 'class/postthumbnails.class.php';
 require_once 'class/eventos.class.php';
 require_once 'class/proyectos.class.php';
 require_once 'class/streaming.class.php';
 
+
+/**
+ * Registrar Plugin y Widgets
+ **/
 add_action('widgets_init','register_wp_my_plugin');
 function register_wp_my_plugin(){
     register_widget('eventos');
@@ -57,9 +65,9 @@ function registrar_js()
 }
 
 
-
-
- 
+/**
+ * Registrar scripts en pie de pagina
+ **/
 add_action('wp_footer','activate_gallery');
 function activate_gallery() {
 ?>

@@ -1,4 +1,8 @@
-
+/*
+*Nombre: js-image-slider.css
+*Objetivo: Hoja de estilos para galeria de imagenes mostrada en el modulo de proyectos
+*Dirección física: /plugins/plugin-sigoes/public/css/js-image-slider.css
+*/
 
 #sliderFrame, #sliderFrame div {
     box-sizing: content-box;
