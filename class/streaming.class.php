@@ -83,10 +83,11 @@ class streaming extends WP_Widget
 		
 		
 		echo $before_widget;		
-		$embed_code = wp_oembed_get($instance['url'], array('width'=>600, 'height'=>480));
+		//$embed_code = wp_oembed_get($instance['url'], array('width'=>600, 'height'=>480));
+		$embed_code = wp_oembed_get($instance['url']);
 		echo '<div class="post-content clearfix">';
 		echo '<center>'.$embed_code.'</center>';
-		echo '</div>';
+		echo '</div><br/><br/>';
 		
 		echo $after_widget;
 	}

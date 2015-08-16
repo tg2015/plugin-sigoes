@@ -26,75 +26,48 @@ function register_wp_my_plugin(){
  * Registrar hojas de estilos
  **/
 
-
 add_action( 'wp_enqueue_scripts', 'registrar_css' );
 function registrar_css() 
 {
-    
-    wp_register_style( 'carousel', plugins_url( 'plugin-sigoes/public/css/carousel.css' ) );
-    wp_enqueue_style( 'carousel' );
-
     wp_register_style( 'mod', plugins_url( 'plugin-sigoes/public/css/mod.css' ) );
     wp_enqueue_style( 'mod' );
+
+    wp_register_style( 'js-image-slider', plugins_url( 'plugin-sigoes/public/css/js-image-slider.css' ) );
+    wp_enqueue_style( 'js-image-slider' );    
 }
 
 /**
  * Registrar scripts
  **/
 
+add_action('init','registrar_jquery');
+function registrar_jquery(){
+
+$jslibs = array('jquery');
+ foreach($jslibs as $lib) wp_enqueue_script($lib);
+}
+
 add_action( 'wp_enqueue_scripts', 'registrar_js' );
 function registrar_js()
 {    
     
-    wp_register_script( 'jquery_min', plugins_url('plugin-sigoes/public/js/jquery.min.js') );
-    wp_enqueue_script( 'jquery_min' );
-
-    wp_register_script( 'jquery_roundabout', plugins_url('plugin-sigoes/public/js/jquery.roundabout.min.js') );
-    wp_enqueue_script( 'jquery_roundabout' );
-
+    wp_register_script( 'js-image-slider', plugins_url('plugin-sigoes/public/js/js-image-slider.js') );
+    wp_enqueue_script( 'js-image-slider' );
+   
 }
+
+
+
 
  
 add_action('wp_footer','activate_gallery');
 function activate_gallery() {
 ?>
  
-    <script type="text/javascript">
-    (function($) {
+ <script type="text/javascript">
 
-    var $descriptions = $('#carousel-descriptions').children('li'),
-        $controls = $('#carousel-controls').find('span'),
-        $carousel = $('#carrusel')
-            .roundabout({childSelector:"img", minOpacity:1, autoplay:true, autoplayDuration:2000, autoplayPauseOnHover:true })
-            .on('focus', 'img', function() {
-                var slideNum = $carousel.roundabout("getChildInFocus");
-            
-                $descriptions.add($controls).removeClass('current');
-                    $($descriptions.get(slideNum)).addClass('current');
-                $($controls.get(slideNum)).addClass('current');
-            });
-
-        $controls.on('click dblclick', function() {
-            var slideNum = -1,
-            i = 0, len = $controls.length;
-
-        for (; i<len; i++) {
-            if (this === $controls.get(i)) {
-            slideNum = i;
-            break;
-            }
-         }
-    
-        if (slideNum >= 0) {
-            $controls.removeClass('current');
-            $(this).addClass('current');
-            $carousel.roundabout('animateToChild', slideNum);
-        }
-        });
-
-    }(jQuery));
-    </script>
-     
+ </script>
+   
 <?php
 }
 

@@ -1,5 +1,5 @@
 <?php
-
+include 'utilidades.class.php';
 /*constructor*/
 class proyectos extends WP_Widget 
 
@@ -9,9 +9,11 @@ class proyectos extends WP_Widget
 
 		parent::WP_Widget(
 
-			'proyectos', 			
+			'proyectos', 
+			
 			//title of the widget in the WP dashboard
 			__('sigoes-proyectos'), 
+
 			array('description'=>'proyectos', 'class'=>'codewrapperwidget')
 
 		);
@@ -29,22 +31,25 @@ class proyectos extends WP_Widget
 	{
 		// these are the default widget values
 		$default = array( 
-			'title' => __(''),
+
+			'titulo' => __(''),
+
 			'url'=> __('')
+
 			);
 
 		$instance = wp_parse_args( (array)$instance, $default );
 
 		//this is the html for the fields in the wp dashboard
 		echo "\r\n";
-		echo "<p>";
-		echo "<label for='".$this->get_field_id('title')."'>" . __('Title') . ":</label> " ;
-		echo "<input type='text' class='widefat' id='".$this->get_field_id('title')."' name='".$this->get_field_name('title')."' value='" . esc_attr($instance['title'] ) . "' />" ;
-		echo "</p>";
 
 		echo "<p>";
+		echo "<label for='".$this->get_field_id('titulo')."'>" . __('Titulo') . ":</label> " ;
+		echo "<input type='text' class='widefat' id='".$this->get_field_id('titulo')."' name='".$this->get_field_name('titulo')."' value='" . esc_attr($instance['titulo'] ) . "' />" ;
+		echo "</p>";
+		echo "<p>";
 		echo "<label for='".$this->get_field_id('url')."'>" . __('url del sitio web') . ":</label> " ;
-		echo "<input type='text' class='widefat' id='".$this->get_field_id('url')."' name='".$this->get_field_name('url')."' value='" . esc_attr( $instance['url'] ) . "' placeholder='http://www.ejemplo.com' />" ;
+		echo "<input type='text' class='widefat' id='".$this->get_field_id('url')."' name='".$this->get_field_name('url')."' value='" . esc_attr( $instance['url'] ) . "' placeholder='http://www' />" ;
 		echo "</p>";
 
 	}
@@ -59,11 +64,13 @@ class proyectos extends WP_Widget
 	 */
 
 	public function update($new_instance, $old_instance) 
+
 	{
 		$instance = $old_instance;
-		$instance['title'] = strip_tags($new_instance['title']);
+		$instance['titulo'] = strip_tags($new_instance['titulo']);
 		$instance['url'] = $new_instance['url'];
 		return $instance;
+
 	}
 
 		
@@ -76,18 +83,21 @@ class proyectos extends WP_Widget
 	 */
 
 	public function widget($args, $instance) 
+
 	{
+
 		extract($args, EXTR_SKIP);
-	
+		
 		//global WP theme-driven "before widget" code
 		echo $before_widget;
 		
-		// code before your user input
-		//echo $instance['code'];
+		$site = nowww($instance['url']); 
+ 		$check = @fsockopen($site, 80); 
 
+		if ($check)
+		{
 		$rss = new DOMDocument();
-		//$rss->load('http://localhost/wordpress/feed/');
-		$url = $instance['url']."/feed";;
+		$url = $instance['url']."/feed";
 		$rss->load($url);
 		$feed = array();
 		foreach ($rss->getElementsByTagName('item') as $node) {
@@ -96,14 +106,15 @@ class proyectos extends WP_Widget
 			'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
 			'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
 			'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue,
-			'category' => $node->getElementsByTagName('category')->item(0)->nodeValue,
+			'category' => $node->getElementsByTagName('category')->item(0)->nodeValue, 
 			);
 		array_push($feed, $item);
 		}
-		$limit = 5;
-		echo '<center>';
+		$limit = count($feed);
 		
-		for($x=0;$x<$limit;$x++) {
+		echo '<div id="sliderFrame"><div id="slider">';
+		for($x=0;$x<$limit;$x++) 
+		{
 		$title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
 		$link = $feed[$x]['link'];
 		$description = $feed[$x]['desc'];
@@ -112,25 +123,17 @@ class proyectos extends WP_Widget
 		
 		$description=str_replace("<p>", " ", $description);
 		$description=str_replace("</p>", " ", $description);
-		
-			if($category=='proyectos')
+		if($category == 'proyectos')
 			{
 			echo $description;
 			}
-		
+		}		
+		echo '</div></div><br/><br/><br/>';
 		}
-		
-		?>
-		<!--html-->
-		<!--codigo html de prueba-->
 
-
-		<?php
-	
-		echo '</center>';	
 		//global WP theme-driven "after widget" code
 		echo $after_widget;
 	}
-
+ 
 }
 ?>

@@ -32,7 +32,7 @@ class eventos extends WP_Widget
 		// these are the default widget values
 		$default = array( 
 
-			'title' => __(''),
+			'titulo' => __(''),
 
 			'url'=> __('')
 
@@ -44,8 +44,8 @@ class eventos extends WP_Widget
 		echo "\r\n";
 
 		echo "<p>";
-		echo "<label for='".$this->get_field_id('title')."'>" . __('Title') . ":</label> " ;
-		echo "<input type='text' class='widefat' id='".$this->get_field_id('title')."' name='".$this->get_field_name('title')."' value='" . esc_attr($instance['title'] ) . "' />" ;
+		echo "<label for='".$this->get_field_id('titulo')."'>" . __('Titulo') . ":</label> " ;
+		echo "<input type='text' class='widefat' id='".$this->get_field_id('titulo')."' name='".$this->get_field_name('titulo')."' value='" . esc_attr($instance['titulo'] ) . "' />" ;
 		echo "</p>";
 		echo "<p>";
 		echo "<label for='".$this->get_field_id('url')."'>" . __('url del sitio web') . ":</label> " ;
@@ -67,7 +67,7 @@ class eventos extends WP_Widget
 
 	{
 		$instance = $old_instance;
-		$instance['title'] = strip_tags($new_instance['title']);
+		$instance['titulo'] = strip_tags($new_instance['titulo']);
 		$instance['url'] = $new_instance['url'];
 		return $instance;
 
@@ -107,7 +107,7 @@ class eventos extends WP_Widget
 			);
 		array_push($feed, $item);
 		}
-		$limit = 3;
+		$limit = count($feed);
 		echo '<center><table border="0"> <tr>';
 		for($x=0;$x<$limit;$x++) 
 		{
@@ -116,17 +116,17 @@ class eventos extends WP_Widget
 		$description = $feed[$x]['desc'];
 		$category = $feed[$x]['category'];
 		$date = date('l F d, Y', strtotime($feed[$x]['date']));
-		if($x==0 && $category == 'eventos')
+		if($x==0)
 			{
 			 echo '<td><b>Gobierno Informa</b><br/><center>';
-			 echo '<img src="'.plugins_url( 'plugin-sigoes/public/img/megafono.png' ).'" width=50% height=50%></center></td>';
+			 echo '<img src="'.plugins_url( 'plugin-sigoes/public/img/megafono.png' ).'" width=50% height=50% class="info"></center></td>';
 			}
 		if($category == 'eventos')
 			{
 			echo '<td><strong><a href="'.$link.'" title="'.$title.'">'.$title.'</a></strong><br /></td>';
 			}
 		}
-		echo '</tr></table></center><br/>';
+		echo '</tr></table></center><br/><br/>';
 		
 		//global WP theme-driven "after widget" code
 		echo $after_widget;
