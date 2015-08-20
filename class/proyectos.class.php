@@ -139,6 +139,11 @@ class proyectos extends WP_Widget
 		echo '</div></div><br/><br/><br/>';
 		}
 
+
+	?>
+
+	<?php
+	
 		//fin de widget
 		echo $after_widget;
 	}

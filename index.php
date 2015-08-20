@@ -41,7 +41,8 @@ function registrar_css()
     wp_enqueue_style( 'mod' );
 
     wp_register_style( 'js-image-slider', plugins_url( 'plugin-sigoes/public/css/js-image-slider.css' ) );
-    wp_enqueue_style( 'js-image-slider' );    
+    wp_enqueue_style( 'js-image-slider' );
+     
 }
 
 /**
@@ -71,11 +72,11 @@ function registrar_js()
 add_action('wp_footer','activate_gallery');
 function activate_gallery() {
 ?>
- 
+
  <script type="text/javascript">
 
  </script>
-   
+
 <?php
 }
 
