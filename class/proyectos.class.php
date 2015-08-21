@@ -117,7 +117,7 @@ class proyectos extends WP_Widget
 		$limit = count($feed);
 		
 		//echo '<div id="sliderFrame"><div id="slider">';
-		echo '<div class="slideshow" data-cycle-fx=carousel data-cycle-timeout=3000 data-cycle-slides="> div" data-cycle-carousel-visible=3 data-cycle-next="#next" data-cycle-prev="#prev" data-cycle-carousel-fluid=true data-cycle-pager="#pager" data-cycle-pause-on-hover="true">';
+		echo '<center><div class="slideshow" data-cycle-fx=carousel data-cycle-timeout=3000 data-cycle-slides="> div" data-cycle-carousel-visible=3 data-cycle-next="#next" data-cycle-prev="#prev" data-cycle-carousel-fluid=true data-cycle-pager="#pager" data-cycle-pause-on-hover="true">';
 		
 		
 		for($x=0;$x<$limit;$x++) 
@@ -145,7 +145,7 @@ class proyectos extends WP_Widget
 		}
 
 		//echo '</div></div><br/><br/><br/>';
-		echo '</div>';
+		echo '</div></center>';
 		}
 
 	echo '<a href="#" id="prev"><img src="'.plugins_url( 'plugin-sigoes/public/img/left.png' ).'"> </a>';

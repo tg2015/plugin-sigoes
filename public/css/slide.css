@@ -1,4 +1,10 @@
-/* pager */
+/*
+*Nombre: slide.css
+*Objetivo: Hoja de estilos para galeria de imagenes mostrada en el modulo de proyectos
+*Dirección física: /plugins/plugin-sigoes/public/css/slide.css
+*/
+
+/*  Inicio de estilos para pager */
 .cycle-pager { 
     text-align: center; width: 100%; z-index: 500; position: absolute; top: 10px; overflow: hidden;
 }
@@ -8,35 +14,47 @@
 }
 .cycle-pager span.cycle-pager-active { color: #0066FF;}
 .cycle-pager > * { cursor: pointer;}
+/*  Fin de estilos para pager */
 
-/*slide*/
+
+/*Inicio de estilos para slide*/
 .slideshow { margin: auto }
 	.slideshow img a div{ width: 100px; height: auto; padding: 2px; }
 	div.responsive img { width: auto; height: auto }
 	.cycle-pager { position: static; margin-top: 5px }
 	div.vertical { width: 100px }
+/*Fin de estilos para slide*/
 
-/* caption */
+/*Inicio de estilos para caption */
 .cycle-caption { position: absolute; color: white; bottom: 15px; right: 15px; z-index: 700; }
+/*Fin de estilos para caption */
 
 
-
-/* prev / next links */
+/* Inicio de estilos para controles prev / next links */
 .cycle-prev, .cycle-next { position: absolute; top: 0; width: 30%; opacity: 0; filter: alpha(opacity=0); z-index: 800; height: 100%; cursor: pointer; }
 .cycle-prev { left: 0;  background: url(http://malsup.github.com/images/left.png) 50% 50% no-repeat;}
 .cycle-next { right: 0; background: url(http://malsup.github.com/images/right.png) 50% 50% no-repeat;}
 .cycle-prev:hover, .cycle-next:hover { opacity: .7; filter: alpha(opacity=70) }
 
 .disabled { opacity: .5; filter:alpha(opacity=50); }
+/* Fin de estilos para controles prev / next links */
 
 
+/*Inicio de estilos para controles prev next*/
 #prev {
- float:left;
- display:block;
+ /*float:left;*/
+ position: absolute;
+ top:25%;
+ height:auto;
+ 
 }
 
 #next {
- float:right;
- display: block;
+ /*float:right;*/
+ position: absolute;
+ right: 0px;
+ top:25%;
+ height:auto;
+ 
 }
-
+/*Fin de estilos para controles prev next*/
