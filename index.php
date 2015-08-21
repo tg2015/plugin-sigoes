@@ -42,6 +42,9 @@ function registrar_css()
 
     wp_register_style( 'js-image-slider', plugins_url( 'plugin-sigoes/public/css/js-image-slider.css' ) );
     wp_enqueue_style( 'js-image-slider' );
+
+    wp_register_style( 'slide', plugins_url( 'plugin-sigoes/public/css/slide.css' ) );
+    wp_enqueue_style( 'slide' );
      
 }
 
@@ -63,10 +66,10 @@ function registrar_js()
     wp_register_script( 'js-image-slider', plugins_url('plugin-sigoes/public/js/js-image-slider.js') );
     wp_enqueue_script( 'js-image-slider' );
 
-    
+
     wp_register_script( 'jquery.min', plugins_url('plugin-sigoes/public/js/jquery.min.js') );
     wp_enqueue_script( 'jquery.min' );
-    
+
     wp_register_script( 'jquery.cycle2', plugins_url('plugin-sigoes/public/js/jquery.cycle2.js') );
     wp_enqueue_script( 'jquery.cycle2' );
 
