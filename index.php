@@ -62,6 +62,16 @@ function registrar_js()
     
     wp_register_script( 'js-image-slider', plugins_url('plugin-sigoes/public/js/js-image-slider.js') );
     wp_enqueue_script( 'js-image-slider' );
+
+    
+    wp_register_script( 'jquery.min', plugins_url('plugin-sigoes/public/js/jquery.min.js') );
+    wp_enqueue_script( 'jquery.min' );
+    
+    wp_register_script( 'jquery.cycle2', plugins_url('plugin-sigoes/public/js/jquery.cycle2.js') );
+    wp_enqueue_script( 'jquery.cycle2' );
+
+    wp_register_script( 'jquery.cycle2.carousel', plugins_url('plugin-sigoes/public/js/jquery.cycle2.carousel.js') );
+    wp_enqueue_script( 'jquery.cycle2.carousel' );
    
 }
 

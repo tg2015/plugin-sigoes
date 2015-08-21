@@ -141,7 +141,43 @@ class proyectos extends WP_Widget
 
 
 	?>
+	
+<div class="slideshow" 
+    data-cycle-fx=carousel
+    data-cycle-timeout=3000
+    data-cycle-carousel-visible=3
+    data-cycle-carousel-fluid=true
+    data-cycle-next="#next"
+    data-cycle-prev="#prev"
+    data-cycle-pager="#pager"
+    data-cycle-pause-on-hover="true"
+    >
+    <img src="http://malsup.github.io/images/beach1.jpg">
+    <img src="http://malsup.github.io/images/beach2.jpg">
+    <img src="http://malsup.github.io/images/beach3.jpg">
+    <img src="http://malsup.github.io/images/beach4.jpg">
+    <img src="http://malsup.github.io/images/beach5.jpg">
+    <img src="http://malsup.github.io/images/beach6.jpg">
+    <img src="http://malsup.github.io/images/beach7.jpg">
+    <img src="http://malsup.github.io/images/beach8.jpg">
+    <img src="http://malsup.github.io/images/beach9.jpg">
+</div>
+<div class=center>
+    <a href="#" id="prev">&lt;&lt; Anterior </a>
+    <a href="#" id="next"> Siguiente &gt;&gt; </a>
+</div>
 
+<div class="cycle-pager" id="pager"></div>
+
+<style>
+	.slideshow { margin: auto }
+	.slideshow img { width: 100px; height: auto; padding: 2px; }
+	div.responsive img { width: auto; height: auto }
+	.cycle-pager { position: static; margin-top: 5px }
+	div.vertical { width: 100px }
+	</style>
+
+	<script type="text/javascript">$.fn.cycle.defaults.autoSelector = '.slideshow';</script>
 	<?php
 	
 		//fin de widget
