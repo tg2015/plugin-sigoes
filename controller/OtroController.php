@@ -1,36 +1,37 @@
 <?php
 /*
-*Nombre del módulo: Eventos
-*Objetivo: Mostrar los eventos realizados por la presidencia de El Salvador
-*Dirección física: /plugins/plugin-sigoes/class/eventos.class.php
+*Nombre del módulo: OtroController
+*Objetivo: Mostrar los otro tipo de proyectos realizados por la presidencia de El Salvador
+*Dirección física: /plugins/plugin-sigoes/controller/OtroController.php
 */
 
+require_once SIGOES_PLUGIN_DIR.'/includes/Utilidad.php';
+require_once SIGOES_PLUGIN_DIR.'/includes/Rss.php';
 
-class eventos extends WP_Widget 
+class OtroController extends WP_Widget 
 
 {
-/*Inicio de Funcion Constructor de Widget Eventos*/
+/*Inicio de Funcion Constructor de Widget Proyectos*/
 	public function __construct() {
 
 		parent::WP_Widget(
 
-			'eventos', 
+			'otros', 
 			
-			//title of the widget in the WP dashboard
-			__('sigoes-eventos'), 
+			__('sigoes-otros'), 
 
-			array('description'=>'eventos coyunturales', 'class'=>'codewrapperwidget')
+			array('description'=>'otros', 'class'=>'codewrapperwidget')
 
 		);
 
 	}
-/*Fin de Funcion Constructor de Widget Eventos*/
+/*Fin de Funcion Constructor Proyectos*/
 	
-/*Inicio de Funcion para crear el Form de Eventos*/
+
+/*Inicio de Funcion para crear el Form de Proyectos*/
 	/**
 	 * @param type $instance
 	 */
-
 	public function form($instance)
 
 	{
@@ -56,10 +57,11 @@ class eventos extends WP_Widget
 		echo "</p>";
 
 	}
-/*Fin de Funcion para crear el Form de Eventos*/
+/*Fin de Funcion para crear el Form de Proyectos*/
 		
+
 /*Inicio de Funcion para Actualizar Datos de Formulario*/
-	/** 
+	/**
 	 * @param type $new_instance
 	 * @param type $old_instance
 	 * @return type
@@ -76,6 +78,7 @@ class eventos extends WP_Widget
 	}
 /*Fin de Funcion para Actualizar Datos de Formulario*/
 		
+
 /*Inicio de Funcion para Mostrar el Widget Actual*/
 	/**
 	 * Renders the actual widget
@@ -89,46 +92,77 @@ class eventos extends WP_Widget
 	{
 
 		extract($args, EXTR_SKIP);
+		
 		//inicio de widget
 		echo $before_widget;
 		
-		$rss = new DOMDocument();
-		$url = $instance['url']."/feed";
-		$rss->load($url);
-		$feed = array();
-		foreach ($rss->getElementsByTagName('item') as $node) {
-		$item = array ( 
-			'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
-			'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
-			'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
-			'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue,
-			'category' => $node->getElementsByTagName('category')->item(0)->nodeValue, 
-			);
-		array_push($feed, $item);
+		
+ 		if(estadoServidor)
+		{
+			$url = Servidor."feed";
+			$check=true;
 		}
+		else
+		{
+			$url = $instance['url']."feed";
+			$check = Utilidad::chequearUrl($url);	
+		}
+ 		
+		if ($check)
+		{
+		$feed = array();
+		$feed = Rss::obtenerFeed($url);
 		$limit = count($feed);
-		echo '<center><table border="0"> <tr>';
+		$existe = Utilidad::contarProyectos('otros', $feed);
+		if ($existe>0)
+		{
+		echo '<div class="post-content clearfix">';
+		$otros=0;
 		for($x=0;$x<$limit;$x++) 
 		{
 		$title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
 		$link = $feed[$x]['link'];
 		$description = $feed[$x]['desc'];
 		$category = $feed[$x]['category'];
+		$content = $feed[$x]['content'];
 		$date = date('l F d, Y', strtotime($feed[$x]['date']));
-		if($x==0)
+		
+		//si no se pudo obtener el enlace redirijira al SIGOES
+		$enlace=Utilidad::extraerEnlace($content);
+		if(empty($enlace))
+		{
+			$enlace=$link;
+		}
+		
+		$description=strip_tags($description, '<img>');
+		if(!empty($description))
+		{
+		$doc = new DOMDocument();
+		$doc->loadHTML($description);
+		$xpath = new DOMXPath($doc);
+		$src = $xpath->evaluate("string(//img/@src)");
+		}
+		if($category == 'otros')
 			{
-			 echo '<td><b>Gobierno Informa</b><br/><center>';
-			 echo '<img src="'.plugins_url( 'plugin-sigoes/public/img/megafono.png' ).'" width=50% height=50% class="info"></center></td>';
-			}
-		if($category == 'eventos')
-			{
-			echo '<td><strong><a href="'.$link.'" title="'.$title.'">'.$title.'</a></strong><br /></td>';
+				echo '<div>';
+				echo '<a href="'.$enlace.'" target="_blank"> <img src="'.$src.'" alt="'.$title.'" title="'.$title.'"></a>';
+				echo '</div>';
+
 			}
 		}
-		echo '</tr></table></center><br/><br/>';
+		//echo utilidades::extraerUrl($description);
+		echo '</div>';
+		if($otros==1)
+			{
+			$x=$limit;
+			}
+		}//fin de existe
+		}//fin de check
+		
 		//fin de widget
 		echo $after_widget;
 	}
 /*Fin de Funcion para Mostrar el Widget Actual*/
-
-}
+ 
+}//fin de clase
+?>

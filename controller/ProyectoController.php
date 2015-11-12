@@ -1,13 +1,14 @@
 <?php
 /*
-*Nombre del módulo: Proyectos
+*Nombre del módulo: ProyectoController
 *Objetivo: Mostrar los proyectos realizados por la presidencia de El Salvador
-*Dirección física: /plugins/plugin-sigoes/class/proyectos.class.php
+*Dirección física: /plugins/plugin-sigoes/controller/ProyectoController.php
 */
 
-include 'utilidades.class.php';
+require_once SIGOES_PLUGIN_DIR.'/includes/Utilidad.php';
+require_once SIGOES_PLUGIN_DIR.'/includes/Rss.php';
 
-class proyectos extends WP_Widget 
+class ProyectoController extends WP_Widget 
 
 {
 /*Inicio de Funcion Constructor de Widget Proyectos*/
@@ -95,68 +96,85 @@ class proyectos extends WP_Widget
 		//inicio de widget
 		echo $before_widget;
 		
-		$site = nowww($instance['url']); 
- 		$check = @fsockopen($site, 80); 
+		
+		if(estadoServidor)
+		{
+			$url = Servidor."feed";
+			$check=true;
+		}
+		else
+		{
+			$url = $instance['url']."feed";
+			$check = Utilidad::chequearUrl($url);	
+		}
 
 		if ($check)
-		{
-		$rss = new DOMDocument();
-		$url = $instance['url']."/feed";
-		$rss->load($url);
+		{		
 		$feed = array();
-		foreach ($rss->getElementsByTagName('item') as $node) {
-		$item = array ( 
-			'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
-			'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
-			'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
-			'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue,
-			'category' => $node->getElementsByTagName('category')->item(0)->nodeValue, 
-			);
-		array_push($feed, $item);
-		}
+		//Recibe la data del feed
+		$feed = Rss::obtenerFeed($url);
 		$limit = count($feed);
+		$existe = Utilidad::contarProyectos('proyectos', $feed);
 		
-		//echo '<div id="sliderFrame"><div id="slider">';
-		echo '<center><div class="slideshow" data-cycle-fx=carousel data-cycle-timeout=3000 data-cycle-slides="> div" data-cycle-carousel-visible=3 data-cycle-next="#next" data-cycle-prev="#prev" data-cycle-carousel-fluid=true data-cycle-pager="#pager" data-cycle-pause-on-hover="true">';
+		if($existe>0)
+		{	
+		$proyectos=0;
+		echo '<br/>';
+		echo '<div class="col-sm-12"><center>';
 		
-		
+
 		for($x=0;$x<$limit;$x++) 
 		{
 		$title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
 		$link = $feed[$x]['link'];
 		$description = $feed[$x]['desc'];
 		$category = $feed[$x]['category'];
+		$orden = $feed[$x]['orden'];
 		$date = date('l F d, Y', strtotime($feed[$x]['date']));
-				
+		
+		//si no se pudo obtener el enlace redirigira al SIGOES		
+		$enlace=Utilidad::extraerEnlace($description);
+		if(empty($enlace))
+		{
+			//obtiene la permantlink del servidor
+			$enlace=$link;
+		}
+		
 		$description=strip_tags($description, '<img>');
+		$src=" ";
+    	if(!empty($description))
+		{
 		$doc = new DOMDocument();
 		$doc->loadHTML($description);
 		$xpath = new DOMXPath($doc);
+		//obtenemos el source de la imagen
 		$src = $xpath->evaluate("string(//img/@src)");
-		
+		}//fin de $descripcion vacia
+		//verificamos que la entrada sea de la categoria proyectos
 		if($category == 'proyectos')
 			{
-			//echo '<a href="'.$link.'"> <img src="'.$src.'" alt="'.$title.'"></a>';
-				echo '<div>';
-				echo '<a href="'.$link.'"> <img src="'.$src.'" alt="'.$title.'"></a>';
-				echo '<div class="cycle-overlay">'.$title.'</div>';
-				echo '</div>';
+				if ($proyectos==0)
+				{
+				echo '<h3>PROYECTOS DE GOBIERNO</h3>';
+				}
+				if(!empty($src))
+				{
+				echo '<a href="'.$enlace.'" target="_blank"> <img class="hvr-pop" src="'.$src.'" alt="'.$title.'" title="'.$title.'"></a>';
+				$proyectos++;
+				}
+				
+			}//fin de category
+			//definimos cuantos proyectos queremos que despliegue el plugin
+			if($proyectos==5)
+			{
+				$x=$limit;
 			}
 		}
-
-		//echo '</div></div><br/><br/><br/>';
-		echo '</div></center>';
-		}
-
-	echo '<a href="#" id="prev"><img src="'.plugins_url( 'plugin-sigoes/public/img/left.png' ).'"> </a>';
-    echo '<a href="#" id="next" class="next"><img src="'.plugins_url( 'plugin-sigoes/public/img/right.png' ).'"> </a>';
-	?>
+		echo '</center></div>';
+		echo '<br/>';
+		}//fin si hay proyectos
+		}//fin de check
 		
-	<div class="cycle-pager" id="pager"></div>
-
-	<script type="text/javascript">$.fn.cycle.defaults.autoSelector = '.slideshow';</script>
-	<?php
-	
 		//fin de widget
 		echo $after_widget;
 	}

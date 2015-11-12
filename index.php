@@ -3,7 +3,7 @@
 /*
 Plugin Name: plugin-sigoes
 Plugin URI: http://modulos.egob.sv
-Description: Plugin para la implementacion de modulos de proyectos, eventos coyunturales y transmision de streaming
+Description: Plugin para la implementacion de modulos de proyectos, eventos coyunturales, transmision de streaming y otros
 Author: Equipo de desarrollo SIGOES
 Author URI: http://modulos.egob.sv
 */
@@ -12,20 +12,24 @@ Author URI: http://modulos.egob.sv
 /**
  * Registrar Clases a utilizar dentro del Plugin
  **/
-require_once 'class/postthumbnails.class.php';
-require_once 'class/eventos.class.php';
-require_once 'class/proyectos.class.php';
-require_once 'class/streaming.class.php';
-
+define('SIGOES_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('Servidor', 'http://modulos.egob.sv/');
+define('INDEX', __FILE__);
+require_once (SIGOES_PLUGIN_DIR.'controller/EventoController.php');
+require_once (SIGOES_PLUGIN_DIR.'controller/ProyectoController.php');
+require_once (SIGOES_PLUGIN_DIR.'controller/StreamingController.php');
+require_once (SIGOES_PLUGIN_DIR.'controller/OtroController.php');
+require_once (SIGOES_PLUGIN_DIR.'controller/ComunicadoController.php');
 
 /**
  * Registrar Plugin y Widgets
  **/
 add_action('widgets_init','register_wp_my_plugin');
 function register_wp_my_plugin(){
-    register_widget('eventos');
-    register_widget('proyectos');
-    register_widget('streaming');
+    register_widget('EventoController');
+    register_widget('ProyectoController');
+    register_widget('StreamingController');
+    register_widget('OtroController');
 }
 
 
@@ -37,14 +41,14 @@ function register_wp_my_plugin(){
 add_action( 'wp_enqueue_scripts', 'registrar_css' );
 function registrar_css() 
 {
-    wp_register_style( 'mod', plugins_url( 'plugin-sigoes/public/css/mod.css' ) );
-    wp_enqueue_style( 'mod' );
+    wp_register_style( 'estilo', plugins_url( 'plugin-sigoes/includes/css/estilo.css' ) );
+    wp_enqueue_style( 'estilo' );
 
-    wp_register_style( 'js-image-slider', plugins_url( 'plugin-sigoes/public/css/js-image-slider.css' ) );
-    wp_enqueue_style( 'js-image-slider' );
-
-    wp_register_style( 'slide', plugins_url( 'plugin-sigoes/public/css/slide.css' ) );
+    wp_register_style( 'slide', plugins_url( 'plugin-sigoes/includes/css/slide.css' ) );
     wp_enqueue_style( 'slide' );
+
+    wp_register_style( 'eventos', plugins_url( 'plugin-sigoes/includes/css/li-scroller.css' ) );
+    wp_enqueue_style( 'eventos' );
      
 }
 
@@ -62,35 +66,19 @@ $jslibs = array('jquery');
 add_action( 'wp_enqueue_scripts', 'registrar_js' );
 function registrar_js()
 {    
-    
-    wp_register_script( 'js-image-slider', plugins_url('plugin-sigoes/public/js/js-image-slider.js') );
-    wp_enqueue_script( 'js-image-slider' );
 
-
-    wp_register_script( 'jquery.min', plugins_url('plugin-sigoes/public/js/jquery.min.js') );
+    wp_register_script( 'jquery.min', plugins_url('plugin-sigoes/includes/js/jquery.min.js') );
     wp_enqueue_script( 'jquery.min' );
-
-    wp_register_script( 'jquery.cycle2', plugins_url('plugin-sigoes/public/js/jquery.cycle2.js') );
+    //utilizado para animacion de carrusel cycle2 y cycle2.carousel
+    wp_register_script( 'jquery.cycle2', plugins_url('plugin-sigoes/includes/js/jquery.cycle2.js') );
     wp_enqueue_script( 'jquery.cycle2' );
 
-    wp_register_script( 'jquery.cycle2.carousel', plugins_url('plugin-sigoes/public/js/jquery.cycle2.carousel.js') );
+    wp_register_script( 'jquery.cycle2.carousel', plugins_url('plugin-sigoes/includes/js/jquery.cycle2.carousel.js') );
     wp_enqueue_script( 'jquery.cycle2.carousel' );
-   
-}
-
-
-/**
- * Registrar scripts en pie de pagina
- **/
-add_action('wp_footer','activate_gallery');
-function activate_gallery() {
-?>
-
- <script type="text/javascript">
-
- </script>
-
-<?php
+    //animacion eventos coyunturales
+    wp_register_script( 'jqueryliscroller', plugins_url('plugin-sigoes/includes/js/jquery.li-scroller.1.0.js') );
+    wp_enqueue_script( 'jqueryliscroller' );
+    
 }
 
 

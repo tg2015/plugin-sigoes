@@ -1,0 +1,157 @@
+/*
+*Nombre: estilo.css
+*Objetivo: Modificaciones a estilos para plantilla proporcionadad por ITIGES
+*Dirección física: /plugins/plugin-sigoes/public/css/estilo.css
+*/
+
+hr.section-hr
+{
+display: none;
+}
+
+#izq {
+    float: left;
+    width: 50%;
+}
+
+#der {
+    float: right;
+    width: 50%;
+}
+
+.proyectos
+{
+	text-align: center;
+
+}
+
+/*Estilos para EventoController*/
+#evento {
+  padding-top: 30px;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+  text-transform: uppercase;
+}
+
+#titulo {
+	font-size: 17px;
+	font-weight: bold;
+	text-align: center;
+
+}
+
+#hr-eventos{
+color: white;
+background-color: white;
+height: 3px;
+
+}
+
+#informa{
+	width: 100%;
+	height: 100px;
+  padding-top:20px;
+}
+
+/*Estilos para ProyectoController*/
+/*Animacion Pop para Banners de Proyectos*/
+@-webkit-keyframes hvr-pop {
+  50% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+}
+
+@keyframes hvr-pop {
+  50% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+}
+
+/*Animacion Pop para Banners de Proyectos*/
+.hvr-pop {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  width:210px;
+  height: 115px;
+  padding-bottom: 5px;
+  text-decoration: none;
+}
+.hvr-pop:hover, .hvr-pop:focus, .hvr-pop:active {
+  -webkit-animation-name: hvr-pop;
+  animation-name: hvr-pop;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+
+/*Estilos para StreamingController*/
+/*Animacion Blinking para Streaming*/
+@-webkit-keyframes blinker {
+  from {opacity: 1.0;}
+  to {opacity: 0.0;}
+}
+
+@-moz-keyframes blinker{
+  from {opacity: 1.0;}
+  to {opacity: 0.0;}
+}
+
+.blinker {
+  text-decoration: blink;
+  -webkit-animation-name: blinker;
+  -webkit-animation-duration: 0.8s;
+  -webkit-animation-iteration-count:infinite;
+  -webkit-animation-timing-function:ease-in-out;
+  -webkit-animation-direction: alternate;
+
+  -moz-animation-name: blinker;
+  -moz-animation-duration: 0.8s;
+  -moz-animation-iteration-count:infinite;
+  -moz-animation-timing-function:ease-in-out;
+  -moz-animation-direction: alternate;
+}
+
+
+#titulo-streaming
+{
+/*color:white;*/
+font-size: 20px;
+font-weight: bold;
+text-transform: capitalize;
+}
+
+#cuerpo-streaming
+{
+text-align: justify;
+}
+
+
+.video-container {
+  position:relative;
+  padding-bottom:56.25%;
+  padding-top:30px;
+  height:0;
+  overflow:hidden;
+  
+}
+
+.video-container iframe {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  
+}

@@ -1,0 +1,75 @@
+/*
+*Nombre del módulo: Estilos para animacion de Eventos
+*Objetivo: Aplicar estilos de movimiento para Eventos de la Presidencia de El Salvador
+*Dirección física: /plugin-sigoes/includes/css/li-scroller.css
+*/
+
+.eventos{
+background-image: url("../img/P2.png");
+background-repeat: repeat-x;
+width: 100%; 
+height: 80px;
+/*padding-top: 20px;*/
+}
+
+.evento{
+padding-top: 30px;
+text-align: center;
+font: bold 14px;
+text-transform: uppercase;
+}
+
+.eventos a{
+font-weight: bold;
+text-decoration: none;
+color:#FAD201;
+}
+
+.evento span {
+margin: 0 10px 0 0;
+}  
+
+.tickercontainer {
+    width: 100%;
+    height: 50px;
+    border: 0px solid #ff0;
+    overflow: hidden;
+	  padding-top: 30px;
+  }
+  .tickercontainer .mask {
+    margin-left: -50px;
+  }
+  
+  #ticker {
+    width: 100%;
+    height: 18px;
+    border: 0px solid #000;
+	position: relative;
+	text-align: right;
+  }
+  
+  #ticker li {
+  float: left;
+  margin-right: 30px;
+	text-decoration: none;
+	font: bold 14px;
+  font-weight: bold;
+	text-transform: uppercase;
+	list-style-type: none;
+  margin-bottom: 10px;
+  }
+
+ul.newsticker a {
+white-space: nowrap;
+padding: 0;
+/*color: white;*/
+font: bold 14px;
+font-weight: bold;
+/*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+font-family: "Open Sans";
+text-decoration: none;
+}
+
+ul.newsticker span {
+margin: 0 10px 0 0;
+}  
