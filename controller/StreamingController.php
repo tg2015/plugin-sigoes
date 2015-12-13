@@ -158,7 +158,7 @@ class StreamingController extends WP_Widget
 				echo '<div id="cuerpo-streaming">'.$resumen.' <span class="read-more2"><a href="'.$link.'" target="_blank">Leer Mas</a></span></div>';
 				echo '</div>';
 			$streaming++;
-				if($streaming==1)
+				if($streaming==STREAMING)
 				{
 					$x=$limit;
 				}

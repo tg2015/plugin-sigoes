@@ -150,7 +150,7 @@ class EventoController extends WP_Widget
 				$eventos++;
 			}
 			//si necesitamos desplegar mas de 5 eventos cambiamos la condicion
-			if($eventos==5)
+			if($eventos==EVENTOS)
 			{
 				$x=$limit;
 			}

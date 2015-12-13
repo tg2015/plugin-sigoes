@@ -165,7 +165,7 @@ class ProyectoController extends WP_Widget
 				
 			}//fin de category
 			//definimos cuantos proyectos queremos que despliegue el plugin
-			if($proyectos==5)
+			if($proyectos==PROYECTOS)
 			{
 				$x=$limit;
 			}

@@ -15,6 +15,11 @@ Author URI: http://modulos.egob.sv
 define('SIGOES_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('Servidor', 'http://modulos.egob.sv/');
 define('INDEX', __FILE__);
+/**
+ *Cantidad de Proyectos
+ **/
+define('PROYECTOS', 5); define('EVENTOS', 5);
+define('STREAMING', 1); define('OTROS', 1);
 require_once (SIGOES_PLUGIN_DIR.'controller/EventoController.php');
 require_once (SIGOES_PLUGIN_DIR.'controller/ProyectoController.php');
 require_once (SIGOES_PLUGIN_DIR.'controller/StreamingController.php');

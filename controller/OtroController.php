@@ -152,7 +152,7 @@ class OtroController extends WP_Widget
 		}
 		//echo utilidades::extraerUrl($description);
 		echo '</div>';
-		if($otros==1)
+		if($otros==OTROS)
 			{
 			$x=$limit;
 			}
